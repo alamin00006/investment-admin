@@ -1,8 +1,9 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
-import AddPRManager from "@/components/property/dashboard/PRMangager/AddPRManager";
+
 import DboardMobileNavigation from "@/components/pages/DboardMobileNavigation";
 import Footer from "@/components/pages/Footer";
+import AddPRManager from "@/components/pages/PRManager/AddPRManager";
 import SidebarDashboard from "@/components/pages/SidebarDashboard";
 import { getProjects } from "@/dataFetching/Project";
 
