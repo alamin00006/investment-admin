@@ -29,7 +29,7 @@ const ProjectLists = ({ data }) => {
                     <Image
                       width={70}
                       height={50}
-                      src={`http://localhost:5000/${pic}`}
+                      src={`https://investment-server-a1qr.onrender.com/${pic}`}
                       alt="Poroject Picture"
                     />
                   </div>

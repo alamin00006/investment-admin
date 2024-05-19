@@ -1,4 +1,5 @@
 "use client";
+import { serverBaseUrl } from "@/dataFetching/baseUrl";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -17,7 +18,7 @@ const AddProjectType = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/category", projectType);
+      await axios.post(`${serverBaseUrl}/category`, projectType);
       MySwal.fire("Project Type Added");
       e.target.reset();
     } catch (err) {

@@ -7,6 +7,7 @@ import ProjectInfo from "./ProjectInfo";
 import Financials from "./Financials";
 import UploadMedia from "./UploadMedia";
 import Timeline from "./Timeline";
+import { serverBaseUrl } from "@/dataFetching/baseUrl";
 const AddProject = ({ data }) => {
   const tabs = [
     "1. Description",
@@ -189,10 +190,7 @@ const AddProject = ({ data }) => {
     }
 
     try {
-      const data = await axios.post(
-        "http://localhost:5000/api/project",
-        formData
-      );
+      const data = await axios.post(`${serverBaseUrl}/project`, formData);
 
       if (data.status === 400) {
         return toast.error(data.data.error);
