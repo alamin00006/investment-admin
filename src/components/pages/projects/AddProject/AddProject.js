@@ -7,20 +7,34 @@ import ProjectInfo from "./ProjectInfo";
 import Financials from "./Financials";
 import UploadMedia from "./UploadMedia";
 import Timeline from "./Timeline";
-import { serverBaseUrl } from "@/dataFetching/baseUrl";
 const AddProject = ({ data }) => {
   const tabs = [
-    "1. Description",
+    "1. Basic Info",
     "2. Financials",
     "3. Documents",
     "4. Market",
     "5. Timeline",
   ];
+
   const [activeTab, setActiveTab] = useState(0);
   const [timeLines, setTimelines] = useState([]);
   const [driveLinks, setDriveLinks] = useState([]);
 
-  // Hadle Time Line & Google Drive Link
+  const [projectValue, setProjectValue] = useState(null);
+  const [assetValue, setAssetValue] = useState(0);
+  const [notaryFee, setNotaryFee] = useState(0);
+  const [sharikanaFee, setSharikanaFee] = useState(0);
+
+  useEffect(() => {
+    const calculatedNotaryFee = parseFloat(assetValue * notaryFee) / 100;
+    const calculatedSharikanaFee = parseFloat(assetValue * sharikanaFee) / 100;
+
+    const newProjectValue =
+      Number(assetValue) + calculatedNotaryFee + calculatedSharikanaFee;
+
+    setProjectValue(newProjectValue);
+  }, [assetValue, notaryFee, sharikanaFee]);
+
   // Handle Time Line & Google Drive Link
   useEffect(() => {
     setTimelines([
@@ -115,12 +129,16 @@ const AddProject = ({ data }) => {
       managementInfo: e.target.managementInfo.value,
       exitStrategy: e.target.exitStrategy.value,
       googleMapLink: e.target.googleMapLink.value,
-      totalProjectValue: e.target.totalProjectValue.value,
+      totalProjectValue: projectValue,
+      projectAssetValue: e.target.projectAssetValue.value,
       minimumInvestmentValue: e.target.minimumInvestmentValue.value,
       notaryFee: e.target.notaryFee.value,
-      yearlyReturnValue: e.target.yearlyReturnValue.value,
-      halfYearlyRetunrValue: e.target.halfYearlyRetunrValue.value,
-      monthlyReturnValue: e.target.monthlyReturnValue.value,
+      sharikanaFee: e.target.sharikanaFee.value,
+      yearlyReturnValueMinimum: e.target.yearlyReturnValueMinimum.value,
+      yearlyReturnValueMaximum: e.target.yearlyReturnValueMaximum.value,
+      halfYearlyRetunrValueMinimum: e.target.halfYearlyRetunrValueMinimum.value,
+      halfYearlyRetunrValueMaximum: e.target.halfYearlyRetunrValueMaximum.value,
+      // monthlyReturnValue: e.target.monthlyReturnValue.value,
       projectAnnualCapitalAppreciation:
         e.target.projectAnnualCapitalAppreciation.value,
       timelines: selectedTimeLines.map((option) => JSON.stringify(option)),
@@ -190,7 +208,10 @@ const AddProject = ({ data }) => {
     }
 
     try {
-      const data = await axios.post(`${serverBaseUrl}/project`, formData);
+      const data = await axios.post(
+        "http://localhost:5000/api/v1/project",
+        formData
+      );
 
       if (data.status === 400) {
         return toast.error(data.data.error);
@@ -202,7 +223,7 @@ const AddProject = ({ data }) => {
       return error.message;
     }
 
-    e.target.reset();
+    // e.target.reset();
   };
 
   return (
@@ -270,7 +291,12 @@ const AddProject = ({ data }) => {
             aria-labelledby="nav-item2-tab"
           >
             <div className="ps-widget bgc-white bdrs12 p30 overflow-hidden position-relative">
-              <Financials />
+              <Financials
+                projectValue={projectValue}
+                setAssetValue={setAssetValue}
+                setNotaryFee={setNotaryFee}
+                setSharikanaFee={setSharikanaFee}
+              />
             </div>
             <div
               className="d-flex justify-content-end"

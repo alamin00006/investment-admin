@@ -24,14 +24,16 @@ const ProjectLists = ({ data }) => {
             <tr key={project._id}>
               <td>{index + 1}</td>
               <td>
-                <div className="list-thumb">
-                  <Image
-                    width={100}
-                    height={70}
-                    src={`https://investment-server-a1qr.onrender.com/${project.projectPicture[0]}`}
-                    alt="Poroject Picture"
-                  />
-                </div>
+                {project.projectPicture?.map((pic, index) => (
+                  <div className="list-thumb" key={index}>
+                    <Image
+                      width={70}
+                      height={50}
+                      src={`http://localhost:5000/${pic}`}
+                      alt="Poroject Picture"
+                    />
+                  </div>
+                ))}
               </td>
               <td>{project?.projectTitle}</td>
 

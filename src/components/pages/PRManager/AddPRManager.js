@@ -1,6 +1,5 @@
 "use client";
 
-import { serverBaseUrl } from "@/dataFetching/baseUrl";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -27,7 +26,7 @@ const AddPRManager = ({ projects }) => {
       role: formData.get("role"),
     };
     try {
-      await axios.post(`${serverBaseUrl}/admin-users`, prManagerData);
+      await axios.post("http://localhost:5000/api/admin-users", prManagerData);
       MySwal.fire("Good job!", "successfully added", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

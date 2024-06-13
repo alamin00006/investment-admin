@@ -10645,6 +10645,10 @@ select:focus {
   border: 1px solid #00c194 !important;
   outline: none;
 }
+.asset-Value input:focus {
+  border: 1px solid #00c194 !important;
+  outline: none !important;
+}
 
 // select option {
 //   border-radius: 0 !important;

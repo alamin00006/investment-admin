@@ -12,7 +12,7 @@ module.exports = {
       },
       {
         protocol: "https",
-        hostname: "investment-server-a1qr\\.onrender\\.com",
+        hostname: "investment-server-om2a\\.onrender\\.com",
         pathname: "**",
       },
       {
