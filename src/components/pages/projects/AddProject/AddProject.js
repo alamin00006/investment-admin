@@ -7,7 +7,7 @@ import ProjectInfo from "./ProjectInfo";
 import Financials from "./Financials";
 import UploadMedia from "./UploadMedia";
 import Timeline from "./Timeline";
-import './ProjectStyles.css';
+import "./ProjectStyles.css";
 const AddProject = ({ data }) => {
   const tabs = [
     "1. Basic Info",
@@ -199,7 +199,7 @@ const AddProject = ({ data }) => {
 
       // Submit the form data
       const data = await axios.post(
-        "http://localhost:5000/api/v1/project",
+        "https://investment-server-a1qr.onrender.com/api/v1/project",
         formData
       );
 
@@ -219,7 +219,7 @@ const AddProject = ({ data }) => {
   return (
     <>
       <nav>
-      <div className="nav nav-tabs pt30" id="nav-tab2" role="tablist">
+        <div className="nav nav-tabs pt30" id="nav-tab2" role="tablist">
           {tabs.map((tab, index) => (
             <button
               key={index}

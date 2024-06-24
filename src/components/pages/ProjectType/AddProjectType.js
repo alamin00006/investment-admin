@@ -17,7 +17,10 @@ const AddProjectType = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/category", projectType);
+      await axios.post(
+        "https://investment-server-a1qr.onrender.com/api/category",
+        projectType
+      );
       MySwal.fire("Project Type Added");
       e.target.reset();
     } catch (err) {

@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 export const AuthContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const router = useRouter()
+  const router = useRouter();
   const MySwal = withReactContent(Swal);
 
   const [user, setUser] = useState(() => {
     if (typeof window !== "undefined") {
       const storedUser = JSON.parse(localStorage.getItem("user")) || null;
-      
+
       return storedUser;
     }
     return null;
@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token") || null;
-     
+
       return storedToken;
     }
     return null;
@@ -31,45 +31,36 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-   
     if (user) {
-      
       localStorage.setItem("user", JSON.stringify(user));
     } else {
-      
       localStorage.removeItem("user");
     }
     if (token) {
-      
       localStorage.setItem("token", token);
     } else {
-     
       localStorage.removeItem("token");
     }
   }, [user, token]);
 
   const loginUser = async (email, password) => {
-   
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/admin-users/login",
+        "https://investment-server-a1qr.onrender.com/api/v1/admin-users/login",
         { email, password }
       );
-      
-  
+
       if (response.status === 200) {
         const responseData = response.data.data; // Extract the nested data object
-       
+
         setUser(responseData.user);
         setToken(responseData.token);
-        router.push("/home-page")
+        router.push("/home-page");
       } else {
-       
         throw new Error("Invalid email or password");
       }
     } catch (error) {
-      
       const errorMessage =
         error.response?.data?.message ||
         "An error occurred. Please try again later.";
@@ -80,11 +71,9 @@ export const UserProvider = ({ children }) => {
       });
     } finally {
       setLoading(false);
-     
     }
   };
   const logoutUser = () => {
-   
     setUser(null);
     setToken(null);
     localStorage.removeItem("user");

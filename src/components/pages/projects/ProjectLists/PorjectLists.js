@@ -1,10 +1,7 @@
 "use client";
-import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Table, Pagination, Form, InputGroup, Button } from "react-bootstrap";
-
-import toast, { Toaster } from "react-hot-toast";
 
 const ProjectLists = ({ data }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,17 +66,17 @@ const ProjectLists = ({ data }) => {
             <tr key={project._id}>
               <td>{indexOfFirstProject + index + 1}</td>
               <td>
-                  <div className="list-thumb">
-                    <Image
-                      width={80}
-                      height={60}
-                      src={project?.projectPicture?.[0]} 
-                      className="cover"
-                      style={{ backgroundPosition: "no-repeat" }}
-                      alt="Project Picture"
-                    />
-                  </div>
-                </td>
+                <div className="list-thumb">
+                  <Image
+                    width={80}
+                    height={60}
+                    src={project?.projectPicture?.[0]}
+                    className="cover"
+                    style={{ backgroundPosition: "no-repeat" }}
+                    alt="Project Picture"
+                  />
+                </div>
+              </td>
 
               <td>{project?.projectTitle}</td>
               <td> Tk {project?.totalProjectValue?.toLocaleString()}</td>

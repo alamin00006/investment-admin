@@ -11,8 +11,8 @@ import useUser from "@/app/hooks/useUser";
 const AddPRManager = ({ projects }) => {
   const MySwal = withReactContent(Swal);
   const [showPassword, setShowPassword] = useState(false);
-  
-  const {user} = useUser()
+
+  const { user } = useUser();
   console.log(user);
 
   const toggleShowPassword = () => {
@@ -35,7 +35,10 @@ const AddPRManager = ({ projects }) => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/v1/admin-users/create-admin-user", userData);
+      await axios.post(
+        "https://investment-server-a1qr.onrender.com/api/v1/admin-users/create-admin-user",
+        userData
+      );
       MySwal.fire("Good job!", "Successfully added", "success");
     } catch (err) {
       console.error("Error:", err);
@@ -124,11 +127,7 @@ const AddPRManager = ({ projects }) => {
                   <label className="heading-color ff-heading fw600 mb10">
                     Property Name
                   </label>
-                  <select
-                    className="form-select"
-                    name="projectId"
-                    required
-                  >
+                  <select className="form-select" name="projectId" required>
                     {projects?.data.map((project) => (
                       <option key={project?._id} value={project?._id}>
                         {project?.projectTitle}
@@ -143,11 +142,7 @@ const AddPRManager = ({ projects }) => {
                   <label className="heading-color ff-heading fw600 mb10">
                     Role
                   </label>
-                  <select
-                    className="form-select"
-                    name="role"
-                    required
-                  >
+                  <select className="form-select" name="role" required>
                     <option value="superAdmin">Super Admin</option>
                     <option value="admin">Admin</option>
                     <option value="manager">Manager</option>
@@ -161,11 +156,7 @@ const AddPRManager = ({ projects }) => {
                   <label className="heading-color ff-heading fw600 mb10">
                     Gender
                   </label>
-                  <select
-                    className="form-select"
-                    name="gender"
-                    required
-                  >
+                  <select className="form-select" name="gender" required>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
