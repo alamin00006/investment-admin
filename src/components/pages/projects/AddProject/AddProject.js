@@ -7,6 +7,7 @@ import ProjectInfo from "./ProjectInfo";
 import Financials from "./Financials";
 import UploadMedia from "./UploadMedia";
 import Timeline from "./Timeline";
+import './ProjectStyles.css';
 const AddProject = ({ data }) => {
   const tabs = [
     "1. Basic Info",
@@ -15,7 +16,7 @@ const AddProject = ({ data }) => {
     "4. Market",
     "5. Timeline",
   ];
-
+  const [files, setFiles] = useState("");
   const [activeTab, setActiveTab] = useState(0);
   const [timeLines, setTimelines] = useState([]);
   const [driveLinks, setDriveLinks] = useState([]);
@@ -157,41 +158,11 @@ const AddProject = ({ data }) => {
       formData.append(key, ProjectData[key]);
     }
 
-    const isValidFileUploaded = (file) => {
-      const validExtensions = [
-        "png",
-        "jpeg",
-        "jpg",
-        "PNG",
-        "JPG",
-        "jpeg",
-        "JPEG",
-        "webp",
-      ];
-      const fileExtension = file.type.split("/")[1];
-      return validExtensions.includes(fileExtension);
-    };
-
     const isValidPdfFile = (file) => {
       const validExtensions = ["pdf", "PDF"];
       const fileExtension = file?.type?.split("/")[1];
       return validExtensions.includes(fileExtension);
     };
-    // if (image?.length > 1) {
-    //   return toast.error("please provide one book picture");
-    // }
-    const file = image[0];
-    if (file.size > 5000000) {
-      return toast.error("Product Picture size 5MB more than not allowed");
-    } else {
-      if (isValidFileUploaded(file)) {
-        Array.from(image).forEach((item) => {
-          formData.append("image", item);
-        });
-      } else {
-        return toast.error("Product Picture is not valid");
-      }
-    }
 
     const pdf = projectPdf[0];
 
@@ -208,6 +179,25 @@ const AddProject = ({ data }) => {
     }
 
     try {
+      const imageUrls = await Promise.all(
+        Object.values(files).map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          data.append("upload_preset", "rtemis");
+
+          const uploadRes = await axios.post(
+            "https://api.cloudinary.com/v1_1/dzakjyd9w/image/upload",
+            data
+          );
+
+          return uploadRes.data.secure_url;
+        })
+      );
+
+      // Append image URLs to formData
+      imageUrls.forEach((url) => formData.append("projectPicture", url));
+
+      // Submit the form data
       const data = await axios.post(
         "http://localhost:5000/api/v1/project",
         formData
@@ -219,8 +209,8 @@ const AddProject = ({ data }) => {
 
       toast.success(data.data.message);
     } catch (error) {
-      console.log(error);
-      return error.message;
+      // console.log(error);
+      return toast.error(error?.message);
     }
 
     // e.target.reset();
@@ -229,7 +219,7 @@ const AddProject = ({ data }) => {
   return (
     <>
       <nav>
-        <div className="nav nav-tabs" id="nav-tab2" role="tablist">
+      <div className="nav nav-tabs pt30" id="nav-tab2" role="tablist">
           {tabs.map((tab, index) => (
             <button
               key={index}
@@ -333,6 +323,7 @@ const AddProject = ({ data }) => {
                 setDriveLinks={setDriveLinks}
                 handleDriveLink={handleDriveLink}
                 handleRemoveDriveLink={handleRemoveDriveLink}
+                setFiles={setFiles}
               />
               <div
                 className="d-flex justify-content-end"
@@ -382,12 +373,12 @@ const AddProject = ({ data }) => {
                   <div className="col-sm-12">
                     <div className="mb20">
                       <label className="heading-color ff-heading fw600 mb10">
-                        About Bassura City
+                        About this city
                       </label>
                       <textarea
                         cols={20}
                         rows={3}
-                        placeholder="About Bassura City ."
+                        placeholder=" About this city"
                         name="aboutCity"
                       />
                     </div>

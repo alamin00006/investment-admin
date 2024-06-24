@@ -44,7 +44,6 @@ const AddProjectPage = async () => {
                 <div className="col-lg-12">
                   <div className="dashboard_title_area">
                     <h2>Add New Project</h2>
-                    <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
               </div>
@@ -52,8 +51,8 @@ const AddProjectPage = async () => {
 
               <div className="row">
                 <div className="col-xl-12">
-                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative">
-                    <div className="navtab-style1">
+                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative" style={{border:"1px solid #00c196"}}>
+                    <div className="navtab-style1 ">
                       <AddProject data={data} />
                     </div>
                   </div>

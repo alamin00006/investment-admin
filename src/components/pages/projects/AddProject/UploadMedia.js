@@ -7,6 +7,7 @@ const UploadMedia = ({
   handleDriveLink,
   setDriveLinks,
   driveLinks,
+  setFiles,
 }) => {
   return (
     <>
@@ -38,7 +39,7 @@ const UploadMedia = ({
               type="file"
               className="form-control p-3"
               name="image"
-              onChange={(e) => setImage(e.target.files)}
+              onChange={(e) => setFiles(e.target.files)}
               multiple
             />
           </div>

@@ -2,107 +2,72 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import { MdOutlineCategory } from "react-icons/md";
+
+import {
+  AiOutlineHome,
+  AiOutlinePlusSquare,
+  AiOutlineUnorderedList,
+  AiOutlineTransaction,
+  AiOutlineHistory,
+  AiOutlineUserAdd,
+  AiOutlineTeam,
+  AiOutlineDollarCircle,
+  AiOutlineLogout,
+} from "react-icons/ai";
 
 const SidebarDashboard = () => {
   const pathname = usePathname();
 
+  const iconStyle = { width: "24px", height: "24px" };
+
   const sidebarItems = [
     {
-      title: "MAIN",
       items: [
         {
           href: "/home-page",
-          icon: "flaticon-discovery",
+          icon: <AiOutlineHome style={iconStyle} />,
           text: "Dashboard",
         },
-      ],
-    },
-    {
-      title: "MANAGE LISTINGS",
-      items: [
         {
           href: "/project-add",
-          icon: "flaticon-new-tab",
+          icon: <AiOutlinePlusSquare style={iconStyle} />,
           text: "Add New Project",
         },
         {
           href: "/project-list",
-          icon: "flaticon-home",
+          icon: <AiOutlineUnorderedList style={iconStyle} />,
           text: "Project List",
         },
         {
-          href: "dashboard-booking-list",
-          icon: "flaticon-like",
-          text: "Booking Reports",
+          icon: <AiOutlineTransaction style={iconStyle} />,
+          text: "Transactions",
+          href: "transactions",
         },
         {
-          href: "project-type",
-          icon: "flaticon-like",
-          text: "Project Type",
-        },
-      ],
-    },
-    {
-      title: "RERURNS",
-      items: [
-        {
-          icon: "flaticon-protection",
-          text: "Use Return History",
-          href: "#",
-        },
-      ],
-    },
-    {
-      title: "Transactions",
-      items: [
-        {
-          icon: "flaticon-protection",
-          text: "Received Payment",
-          href: "#",
+          icon: <AiOutlineHistory style={iconStyle} />,
+          text: "Return History",
+          href: "return-history",
         },
         {
-          icon: "flaticon-user",
-          text: "Return Payment",
-          href: "#",
+          icon: <AiOutlineDollarCircle style={iconStyle} />,
+          text: "Withdraw Requests",
+          href: "withdraw-request",
+        },
+
+        {
+          icon: <AiOutlineTeam style={iconStyle} />,
+          text: "List of Admin Users",
+          href: "/admin-users",
         },
         {
-          icon: "flaticon-user",
-          text: "Withdraw Request",
-          href: "#",
-        },
-      ],
-    },
-    {
-      title: "PR MANAGE",
-      items: [
-        {
-          icon: "flaticon-protection",
-          text: "Add PR Manager",
-          href: "/dashboard-add-pr-manager",
-        },
-        {
-          icon: "flaticon-user",
-          text: "List of PR Manager",
-          href: "/dashboard-prManager-list",
-        },
-      ],
-    },
-    {
-      title: "Others",
-      items: [
-        {
-          href: "#",
-          icon: "flaticon-protection",
-          text: "User Profile",
-        },
-        {
-          href: "#",
-          icon: "flaticon-user",
-          text: "Referral",
+          href: "categories-list",
+          icon: <MdOutlineCategory style={iconStyle} />,
+          text: "Categories",
         },
         {
           href: "/login",
-          icon: "flaticon-logout",
+          icon: <AiOutlineLogout style={iconStyle} />,
           text: "Logout",
         },
       ],
@@ -129,7 +94,10 @@ const SidebarDashboard = () => {
                     pathname == item.href ? "-is-active" : ""
                   } `}
                 >
-                  <i className={`${item.icon} mr15`} />
+                  {/* <i className={`${item.icon} mr15`} />
+                   */}
+
+                  <span className="mr15">{item.icon}</span>
                   {item.text}
                 </Link>
               </div>

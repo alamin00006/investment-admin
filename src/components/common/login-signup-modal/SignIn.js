@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+
 const SignIn = () => {
   const {
     register,
@@ -47,6 +48,7 @@ const SignIn = () => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+
   return (
     <form className="form-style1" onSubmit={handleSubmit(onSubmit)}>
       <div className="mb25">
@@ -61,12 +63,11 @@ const SignIn = () => {
           required
         />
       </div>
-      {/* End email */}
 
       <div className="mb15">
         <label className="form-label fw600 dark-color">Password</label>
         <input
-          type="text"
+          type={showPassword ? "text" : "password"}
           className="form-control"
           placeholder="Enter Password"
           {...register("password", {
@@ -83,8 +84,10 @@ const SignIn = () => {
           })}
           required
         />
+        {errors.password && (
+          <p className="text-danger">{errors.password.message}</p>
+        )}
       </div>
-      {/* End Password */}
 
       <div className="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb10">
         <label className="custom_checkbox fz14 ff-heading">
@@ -92,11 +95,18 @@ const SignIn = () => {
           <input type="checkbox" defaultChecked="checked" />
           <span className="checkmark" />
         </label>
-        {/* <a className="fz14 ff-heading" href="#">
-          Lost your password?
-        </a> */}
+        <div>
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? "Hide" : "Show"} Password
+          </button>
+        </div>
       </div>
-      {/* End  Lost your password? */}
+
+      {loginError && <p className="text-danger">{loginError}</p>}
 
       <div className="d-grid mb20">
         <button className="ud-btn btn-thm" type="submit">

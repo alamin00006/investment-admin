@@ -1,5 +1,4 @@
 import MenuItems from "./MenuItems";
-import SocialLinks from "./SocialLinks";
 
 const SidebarPanel = () => {
   return (
@@ -21,12 +20,8 @@ const SidebarPanel = () => {
           <div className="hiddenbar_navbar_menu">
             <MenuItems />
           </div>
-          {/* End .hiddenbar_navbar_menu */}
-
-          {/* hiddenbar_footer */}
         </div>
       </div>
-      {/* End hsidebar-content */}
     </div>
   );
 };

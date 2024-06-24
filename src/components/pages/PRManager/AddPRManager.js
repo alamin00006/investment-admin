@@ -4,19 +4,26 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
+import useUser from "@/app/hooks/useUser";
 
 const AddPRManager = ({ projects }) => {
   const MySwal = withReactContent(Swal);
   const [showPassword, setShowPassword] = useState(false);
+  
+  const {user} = useUser()
+  console.log(user);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
 
-    const prManagerData = {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const userData = {
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
@@ -24,33 +31,36 @@ const AddPRManager = ({ projects }) => {
       projectId: formData.get("projectId"),
       address: formData.get("address"),
       role: formData.get("role"),
+      gender: formData.get("gender"),
     };
+
     try {
-      await axios.post("http://localhost:5000/api/admin-users", prManagerData);
-      MySwal.fire("Good job!", "successfully added", "success");
+      await axios.post("http://localhost:5000/api/v1/admin-users/create-admin-user", userData);
+      MySwal.fire("Good job!", "Successfully added", "success");
     } catch (err) {
-      MySwal.fire("Something Error Found.", "warning");
+      console.error("Error:", err);
+      MySwal.fire("Something went wrong.", "Please try again later.", "error");
     }
   };
 
   return (
     <>
-      {/* End nav tabs */}
       <form onSubmit={handleSubmit}>
         <div className="ps-widget bgc-white bdrs12 p30 overflow-hidden position-relative">
-          <h4 className="title fz17 mb30">PR Manager</h4>
+          <h4 className="title fz17 mb30 bg-orange">New User Form</h4>
           <div className="form-style1">
             <div className="row">
               <div className="col-sm-6">
                 <div className="mb20">
                   <label className="heading-color ff-heading fw600 mb10">
-                    PR Name
+                    User Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="PR Manager Name"
+                    placeholder="Add User Name"
                     name="name"
+                    required
                   />
                 </div>
               </div>
@@ -61,27 +71,38 @@ const AddPRManager = ({ projects }) => {
                     Email
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     placeholder="Enter Email"
                     name="email"
+                    required
                   />
                 </div>
               </div>
+
               <div className="col-sm-6">
                 <div className="mb30">
                   <label className="heading-color ff-heading fw600 mb10">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Enter Password"
-                    name="password"
-                  />
+                  <div className="input-group">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Enter Password"
+                      name="password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={toggleShowPassword}
+                    >
+                      {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    </button>
+                  </div>
                 </div>
               </div>
-              {/* End .col-6 */}
 
               <div className="col-sm-6">
                 <div className="mb30">
@@ -93,6 +114,7 @@ const AddPRManager = ({ projects }) => {
                     className="form-control"
                     placeholder="Mobile Number"
                     name="phone"
+                    required
                   />
                 </div>
               </div>
@@ -102,66 +124,69 @@ const AddPRManager = ({ projects }) => {
                   <label className="heading-color ff-heading fw600 mb10">
                     Property Name
                   </label>
-
                   <select
-                    className=""
-                    style={{
-                      width: "100%",
-                      height: "50px",
-                      borderRadius: "5px",
-                    }}
+                    className="form-select"
                     name="projectId"
+                    required
                   >
                     {projects?.data.map((project) => (
-                      <option
-                        key={project?._id}
-                        style={{
-                          borderRadius: 0,
-                        }}
-                        value={project?._id}
-                      >
+                      <option key={project?._id} value={project?._id}>
                         {project?.projectTitle}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
+
               <div className="col-sm-6">
                 <div className="mb30">
                   <label className="heading-color ff-heading fw600 mb10">
                     Role
                   </label>
-
                   <select
-                    className=""
-                    style={{
-                      width: "100%",
-                      height: "50px",
-                      borderRadius: "5px",
-                    }}
+                    className="form-select"
                     name="role"
+                    required
                   >
-                    <option>Super Admin</option>
-                    <option>Admin</option>
-                    <option>PR Manager</option>
+                    <option value="superAdmin">Super Admin</option>
+                    <option value="admin">Admin</option>
+                    <option value="manager">Manager</option>
+                    <option value="prManager">PR Manager</option>
                   </select>
                 </div>
               </div>
-              {/* End .col-6 */}
 
               <div className="col-sm-6">
                 <div className="mb30">
                   <label className="heading-color ff-heading fw600 mb10">
-                    PR Address
+                    Gender
+                  </label>
+                  <select
+                    className="form-select"
+                    name="gender"
+                    required
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="col-sm-6">
+                <div className="mb30">
+                  <label className="heading-color ff-heading fw600 mb10">
+                    Address
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="PR Address"
+                    placeholder="New User Address"
                     name="address"
+                    required
                   />
                 </div>
               </div>
+
               <div className="d-flex justify-content-end p-2">
                 <button
                   type="submit"

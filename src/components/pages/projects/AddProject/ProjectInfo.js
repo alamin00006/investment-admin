@@ -12,24 +12,11 @@ const ProjectInfo = ({ data }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Project Title"
               name="projectTitle"
             />
           </div>
         </div>
-        {/* <div className="col-sm-3">
-          <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-              PR Manager
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Pr Manager"
-              name="prManager"
-            />
-          </div>
-        </div> */}
 
         <div className="col-sm-6 col-xl-6">
           <div className="mb30">
@@ -109,12 +96,12 @@ const ProjectInfo = ({ data }) => {
         <div className="col-sm-12">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              About Property
+              About Project
             </label>
             <textarea
               cols={30}
               rows={5}
-              placeholder="About Property."
+              placeholder="About Project."
               defaultValue={""}
               name="aboutProperty"
             />

@@ -44,7 +44,7 @@ const ProjectListPage = async () => {
               <div className="row align-items-center pb40">
                 <div className="col-lg-12">
                   <div className="dashboard_title_area">
-                    <h2>Project List</h2>
+                    <h3>Project List</h3>
                   </div>
                 </div>
               </div>

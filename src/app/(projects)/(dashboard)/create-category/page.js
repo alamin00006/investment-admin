@@ -11,7 +11,7 @@ export const metadata = {
   title: "Dashboard Add Property || Homez - Real Estate NextJS Template",
 };
 
-const ProjectType = () => {
+const CreateCategory = () => {
   return (
     <>
       {/* Main Header Nav */}
@@ -63,4 +63,4 @@ const ProjectType = () => {
   );
 };
 
-export default ProjectType;
+export default CreateCategory;

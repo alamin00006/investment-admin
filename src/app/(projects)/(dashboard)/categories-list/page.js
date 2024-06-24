@@ -1,31 +1,23 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
+import AddCategories from "@/components/pages/AddCategories/page";
 import DboardMobileNavigation from "@/components/pages/DboardMobileNavigation";
 import Footer from "@/components/pages/Footer";
 import SidebarDashboard from "@/components/pages/SidebarDashboard";
-import { getAllInvests } from "@/dataFetching/invest";
-import AllInvestLists from "../../../../components/Invest-page/AllInvestLists";
 
-
-
-// import RecentActivities from "@/components/property/dashboard/dashboard-home/RecentActivities";
-// import TopStateBlock from "@/components/property/dashboard/dashboard-home/TopStateBlock";
-// import PropertyViews from "@/components/property/dashboard/dashboard-home/property-view";
+import { getProjects } from "@/dataFetching/Project";
 
 export const metadata = {
-  title: "Dashboard Home || Homez - Real Estate NextJS Template",
+  title: "Dashboard Add Property || Homez - Real Estate NextJS Template",
 };
 
-const DashboardHome = async () => {
-  const data = await getAllInvests();
-  //console.log(data)
-  
-  
+const CategoryList = async () => {
+  const data = await getProjects();
 
   return (
     <>
-       {/* Main Header Nav */}
-       <DashboardHeader />
+      {/* Main Header Nav */}
+      <DashboardHeader />
       {/* End Main Header Nav */}
 
       {/* Mobile Nav  */}
@@ -51,7 +43,7 @@ const DashboardHome = async () => {
               <div className="row align-items-center pb40">
                 <div className="col-lg-12">
                   <div className="dashboard_title_area">
-                    <h2>Invest History</h2>
+                    <h3>Project Categories</h3>
                   </div>
                 </div>
               </div>
@@ -61,7 +53,7 @@ const DashboardHome = async () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative">
                     <div className="navtab-style1">
-                      <AllInvestLists data={data?.data} />
+                      <AddCategories/>
                     </div>
                   </div>
                 </div>
@@ -80,4 +72,4 @@ const DashboardHome = async () => {
   );
 };
 
-export default DashboardHome;
+export default CategoryList;

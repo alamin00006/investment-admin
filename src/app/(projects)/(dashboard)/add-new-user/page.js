@@ -43,7 +43,7 @@ const DashboardAddPRManager = async () => {
               <div className="row align-items-center pb40">
                 <div className="col-lg-12">
                   <div className="dashboard_title_area">
-                    <h2>Add New PR Manager</h2>
+                    <h2>Add New User</h2>
                   </div>
                 </div>
               </div>
